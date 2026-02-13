@@ -6,24 +6,30 @@ import { useGiftGetByIdQuery } from '../../Redux/Apis/giftApi';
 
 const GetUserOrdersDetail = ({ onBack }) => {
     const navigate = useNavigate();
+
     const { userId } = useParams();
     const [activeTab, setActiveTab] = useState('Ongoing Orders');
 
     const { data, isLoading, isError } = useGetUserByIdQuery(userId);
     const { data: giftData, isLoading: isGiftLoading } = useGiftGetByIdQuery(userId);
 
-    const user = data?.user;
+    const user = data?.user || data || {};
+
+    const ongoingOrders = user?.ongoingOrdersList || [];
+    const completedOrders = user?.completedOrdersList || [];
+
+    // Ensure addresses is an array
+    const addresses = user?.addresses || [];
 
     const getInitials = (fullName) =>
         fullName?.split(' ').map(w => w[0]).join('').toUpperCase() || '?';
 
     const userOrders =
-        activeTab === 'Ongoing Orders'
-            ? user?.ongoingOrdersList || []
-            : activeTab === 'Completed Orders'
-                ? user?.completedOrdersList || []
+        activeTab === "Ongoing Orders"
+            ? ongoingOrders
+            : activeTab === "Completed Orders"
+                ? completedOrders
                 : [];
-
     /* ================= LOADING ================= */
     if (isLoading) {
         return (
@@ -36,7 +42,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
     }
 
     /* ================= ERROR ================= */
-    if (isError || !user) {
+    if (isError) {
         return (
             <div className="text-white mt-4 md:mt-8 md:ml-24 max-w-7xl px-4 md:px-0">
                 <button
@@ -84,11 +90,11 @@ const GetUserOrdersDetail = ({ onBack }) => {
                     <div className="flex flex-wrap gap-4 text-sm">
                         <div className="flex items-center gap-2">
                             <MapPin size={16} />
-                            {user?.addresses?.[0]?.city || 'N/A'}
+                            {addresses?.[0]?.city || 'N/A'}
                         </div>
                         <div className="flex items-center gap-2">
                             <Calendar size={16} />
-                            Joined {user?.joinedDate || 'N/A'}
+                            Joined {user?.joinedDate || (user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A')}
                         </div>
                     </div>
                 </div>
@@ -142,7 +148,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
 
                                 <div className="flex justify-between md:justify-end items-center gap-3">
                                     <span className="text-xs px-3 py-1 rounded bg-cyan-500/20 text-cyan-400">
-                                        {order.status}
+                                        {order.status || order.Status}
                                     </span>
                                     <span className="text-[#22FF00] font-bold">
                                         ${order.totalAmount}

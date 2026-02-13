@@ -11,6 +11,7 @@ const Enquiries = () => {
   const [updateStatus, { isLoading: updating }] = useEnquiryStatusMutation();
   const [statusFilter, setStatusFilter] = React.useState("All");
   const [filterOpen, setFilterOpen] = React.useState(false);
+  const [statusLoadingId, setStatusLoadingId] = React.useState(null);
 
   const enquiries = data?.data?.map((item) => {
     const dateObj = new Date(item.createdAt);
@@ -189,11 +190,14 @@ const Enquiries = () => {
                   <td className="py-6 px-6 whitespace-nowrap flex gap-2">
                     {e.status === "Pending" ? (
                       <button
-                        onClick={() => updateStatus({ id: e.id })}
+                        onClick={() => {
+                          setStatusLoadingId(e.id);
+                          updateStatus({ id: e.id });
+                        }}
                         disabled={updating}
                         className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white rounded-xl text-sm"
                       >
-                        {updating ? "Updating..." : "Mark as Contacted"}
+                        {updating && statusLoadingId === e.id ? "Updating..." : "Mark as Contacted"}
                       </button>
 
                     ) : (
