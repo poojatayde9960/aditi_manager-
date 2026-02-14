@@ -18,6 +18,15 @@ export const dashboardApi = createApi({
                 },
                 providesTags: ["dashboard"]
             }),
+            getUserConversionRate: builder.query({
+                query: () => {
+                    return {
+                        url: "/getUserConversionRate",
+                        method: "GET"
+                    }
+                },
+                providesTags: ["dashboard"]
+            }),
 
             getTopSelling: builder.query({
                 query: () => {
@@ -56,4 +65,4 @@ export const dashboardApi = createApi({
     }
 })
 
-export const { useGetCardstatusQuery, useGetTopSellingQuery, useGetSaleByPercentQuery, useGetSaleByMonthlyQuery } = dashboardApi
+export const { useGetCardstatusQuery, useGetTopSellingQuery, useGetSaleByPercentQuery, useGetSaleByMonthlyQuery, useGetUserConversionRateQuery } = dashboardApi
