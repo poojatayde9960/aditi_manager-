@@ -1,4 +1,3 @@
-
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { useGetSaleByPercentQuery } from "../../Redux/Apis/dashboardApi";
@@ -8,52 +7,62 @@ const COLORS = ["#EBFFBF", "#0017FA", "#AE0000", "#D207FF", "#00D4FF"];
 const SellsByPerfume = () => {
     const { data: apiData, isLoading } = useGetSaleByPercentQuery();
 
-    const rawData =
-        apiData?.data ||
-        apiData?.result?.data ||
-        apiData?.result ||
-        [];
+    const rawData = apiData?.data || [];
 
-    const chartData = rawData.map((item, index) => ({
-        name: item.name,
-        value: Number(item.percentage), // IMPORTANT
-        color: COLORS[index % COLORS.length],
-    }));
+    // ✅ Merge duplicate perfumes by name
+    const mergedData = rawData.reduce((acc, item) => {
+        const existing = acc.find((p) => p.name === item.name);
+        if (existing) {
+            existing.unitsSold += item.unitsSold || 0;
+        } else {
+            acc.push({
+                ...item,
+                unitsSold: item.unitsSold || 0,
+            });
+        }
+        return acc;
+    }, []);
+
+    // ✅ Calculate total units
+    const totalUnits = mergedData.reduce(
+        (sum, item) => sum + (item.unitsSold || 0),
+        0
+    );
+
+    // ✅ Create dynamic chart data
+    const chartData = mergedData.map((item, index) => {
+        let calculatedPercentage = 0;
+
+        if (totalUnits > 0) {
+            calculatedPercentage =
+                item.percentage && item.percentage > 0
+                    ? Number(item.percentage)
+                    : Number(
+                        ((item.unitsSold / totalUnits) * 100).toFixed(2)
+                    );
+        }
+
+        return {
+            name: item.name,
+            value: totalUnits > 0 ? calculatedPercentage : 1, // 👈 equal slice if no sales
+            displayValue: calculatedPercentage, // legend & tooltip sathi
+            color: COLORS[index % COLORS.length],
+        };
+    });
+
     if (isLoading) {
         return (
-            <div className="bg-[#FFFFFF0A] border font-manrope border-white/10 rounded-2xl p-6 shadow-lg h-full">
-                <div className="animate-pulse space-y-6">
-                    {/* Title */}
-                    <div className="h-4 w-40 bg-slate-700 rounded"></div>
-
-                    {/* Chart placeholder */}
-                    <div className="flex justify-center">
-                        <div className="h-[160px] w-[160px] rounded-full bg-slate-700"></div>
-                    </div>
-
-                    {/* Legend placeholders */}
-                    <div className="space-y-3">
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className="flex justify-between items-center">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
-                                    <div className="h-2 w-24 bg-slate-700 rounded"></div>
-                                </div>
-                                <div className="h-2 w-10 bg-slate-700 rounded"></div>
-                            </div>
-                        ))}
-                    </div>
+            <div className="bg-[#FFFFFF0A] border border-white/10 rounded-2xl p-6 shadow-lg h-full animate-pulse">
+                <div className="h-4 w-40 bg-slate-700 rounded mb-6"></div>
+                <div className="flex justify-center">
+                    <div className="h-[160px] w-[160px] rounded-full bg-slate-700"></div>
                 </div>
             </div>
         );
     }
 
-    if (!chartData.length) {
-        return <p className="text-gray-400">No data available</p>;
-    }
-
     return (
-        <div className="bg-[#FFFFFF0A] border font-manrope border-white/10 rounded-2xl p-6 shadow-lg h-full flex flex-col">
+        <div className="bg-[#FFFFFF0A] border border-white/10 rounded-2xl p-6 shadow-lg h-full flex flex-col">
             <h3 className="text-white text-lg font-semibold mb-4">
                 Sells By Perfume
             </h3>
@@ -79,7 +88,9 @@ const SellsByPerfume = () => {
                             </Pie>
 
                             <Tooltip
-                                formatter={(value) => `${value}%`}
+                                formatter={(value, name, props) =>
+                                    `${props.payload.displayValue}%`
+                                }
                                 contentStyle={{
                                     backgroundColor: "#020523",
                                     borderColor: "#ffffff20",
@@ -109,7 +120,7 @@ const SellsByPerfume = () => {
                             </span>
                         </div>
                         <span className="text-gray-400 font-medium">
-                            {item.value}%
+                            {item.displayValue}%
                         </span>
                     </div>
                 ))}
