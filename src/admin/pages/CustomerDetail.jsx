@@ -353,6 +353,7 @@ import img from '../../../public/bg1.png';
 import { MapPin, Calendar, CheckCircle, Clock, Truck, X } from 'lucide-react';
 import { IoGift } from 'react-icons/io5';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { Icon } from "@iconify/react";
 import { useGetOrderDetailByIdQuery } from '../../Redux/Apis/updateStatusApi';
 import { useParams } from 'react-router-dom';
 import { useGiftGetByIdQuery } from '../../Redux/Apis/giftApi';
@@ -577,70 +578,55 @@ export default function CustomerDetails() {
               </div>
 
               {/* Order Timeline - KEPT and made semi-dynamic */}
-              <div className="mb-6 bg-[#020523] rounded-xl p-6">
-                <h4 className="text-slate-400 text-sm mb-4 font-medium">Order Timeline</h4>
-                <div className="space-y-4">
-                  {/* Timeline Item 1 */}
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-20 rounded-full  border flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
+              <div className="bg-[#0B1135] p-5 rounded-2xl border border-white/10">
+                <h3 className="text-sm text-gray-400 mb-3">Order Timeline</h3>
+
+                {[
+                  "Order Placed",
+                  "Payment Confirmed",
+                  "Processing",
+                  "Shipped",
+                  "Delivered",
+                ].map((step, index) => {
+                  const currentStatus = (order?.status || order?.Status || 'Pending')?.toLowerCase();
+                  const paymentStatus = (order?.paymentStatus || "").toLowerCase();
+                  let isActive = false;
+
+                  if (index === 0) isActive = true;
+                  else if (index === 1) isActive = paymentStatus === "completed";
+                  else if (index === 2) isActive = ["processing", "shipped", "delivered", "completed"].includes(currentStatus);
+                  else if (index === 3) isActive = ["shipped", "delivered", "completed"].includes(currentStatus);
+                  else if (index === 4) isActive = ["delivered", "completed"].includes(currentStatus);
+
+                  return (
+                    <div
+                      key={index}
+                      className="relative pb-8 flex items-center gap-4"
+                    >
+                      <div className="w-14 h-14 rounded-full bg-[#FFFFFF2E] flex items-center justify-center">
+                        <Icon
+                          icon="solar:check-circle-broken"
+                          width="28"
+                          height="28"
+                          className={isActive ? "text-[#00D4FF]" : "text-gray-500"}
+                        />
                       </div>
-                      <div className="w-0.5 h-full bg-slate-700 mt-2"></div>
-                    </div>
-                    <div className="pb-6">
-                      <h5 className="font-medium">Order Placed</h5>
-                      <p className="text-slate-400 text-sm">Nov 28, 2025, 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-20 rounded-full border-2 border-blue-500 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
-                      </div>
-                      <div className="w-0.5 h-full bg-slate-700 mt-2"></div>
-                    </div>
-                    <div className="pb-6">
-                      <h5 className="font-medium">Payment Confirmed</h5>
-                      <p className="text-slate-400 text-sm">Nov 28, 2025, 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-20 rounded-full border-2 border-cyan-500 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
-                      </div>
-                      <div className="w-0.5 h-full bg-slate-700 mt-2"></div>
-                    </div>
-                    <div className="pb-6">
-                      <h5 className="font-medium">Processing</h5>
-                      <p className="text-slate-400 text-sm">Nov 28, 2025, 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-20 rounded-full  border-2 border-slate-600 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
-                      </div>
-                      <div className="w-0.5 h-full bg-slate-700 mt-2"></div>
-                    </div>
-                    <div className="pb-6">
-                      <h5 className="font-medium text-slate-400">Shipped</h5>
-                      <p className="text-slate-500 text-sm">Nov 28, 2025, 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 rounded-full  border-2 border-slate-600 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
+
+                      {index < 4 && (
+                        <div className="absolute left-[29px] top-[60%] w-[1px] h-10 bg-[#FFFFFF4A]" />
+                      )}
+
+                      <div>
+                        <p className="font-medium">{step}</p>
+                        <p className="text-gray-400 text-xs">
+                          {order?.createdAt
+                            ? new Date(order.createdAt).toLocaleString()
+                            : "N/A"}
+                        </p>
                       </div>
                     </div>
-                    <div>
-                      <h5 className="font-medium text-slate-400">Delivered</h5>
-                      <p className="text-slate-500 text-sm">Nov 28, 2025, 10:30 AM</p>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
 
               {/* Shipping Address */}

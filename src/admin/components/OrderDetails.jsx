@@ -162,34 +162,46 @@ const OrderDetails = ({ open, onClose, order }) => {
               "Processing",
               "Shipped",
               "Delivered",
-            ].map((step, index) => (
-              <div
-                key={index}
-                className="relative pb-8 flex items-center gap-4"
-              >
-                <div className="w-14 h-14 rounded-full bg-[#FFFFFF2E] flex items-center justify-center">
-                  <Icon
-                    icon="solar:check-circle-broken"
-                    width="28"
-                    height="28"
-                    className="text-[#00D4FF]"
-                  />
-                </div>
+            ].map((step, index) => {
+              const status = (orderData?.Status || orderData?.status || "Pending").toLowerCase();
+              const paymentStatus = (orderData?.paymentStatus || "").toLowerCase();
+              let isActive = false;
 
-                {index < 4 && (
-                  <div className="absolute left-[29px] top-[60%] w-[1px] h-10 bg-[#FFFFFF4A]" />
-                )}
+              if (index === 0) isActive = true;
+              else if (index === 1) isActive = paymentStatus === "completed";
+              else if (index === 2) isActive = ["processing", "shipped", "delivered", "completed"].includes(status);
+              else if (index === 3) isActive = ["shipped", "delivered", "completed"].includes(status);
+              else if (index === 4) isActive = ["delivered", "completed"].includes(status);
 
-                <div>
-                  <p className="font-medium">{step}</p>
-                  <p className="text-gray-400 text-xs">
-                    {orderData?.createdAt
-                      ? new Date(orderData.createdAt).toLocaleString()
-                      : "N/A"}
-                  </p>
+              return (
+                <div
+                  key={index}
+                  className="relative pb-8 flex items-center gap-4"
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#FFFFFF2E] flex items-center justify-center">
+                    <Icon
+                      icon="solar:check-circle-broken"
+                      width="28"
+                      height="28"
+                      className={isActive ? "text-[#00D4FF]" : "text-gray-500"}
+                    />
+                  </div>
+
+                  {index < 4 && (
+                    <div className="absolute left-[29px] top-[60%] w-[1px] h-10 bg-[#FFFFFF4A]" />
+                  )}
+
+                  <div>
+                    <p className="font-medium">{step}</p>
+                    <p className="text-gray-400 text-xs">
+                      {orderData?.createdAt
+                        ? new Date(orderData.createdAt).toLocaleString()
+                        : "N/A"}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
