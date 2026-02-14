@@ -16,6 +16,13 @@ export const userOrderApi = createApi({
             }),
             providesTags: ["Users"],
         }),
+        getAverageMonthlyOrders: builder.query({
+            query: () => ({
+                url: "/admin/order/getAverageMonthlyOrders",
+                method: "GET",
+            }),
+            providesTags: ["Users"],
+        }),
 
         // Get orders by user ID
         getOrdersByUserId: builder.query({
@@ -28,4 +35,4 @@ export const userOrderApi = createApi({
     }),
 });
 
-export const { useGetUsersQuery, useGetOrdersByUserIdQuery } = userOrderApi;
+export const { useGetUsersQuery, useGetOrdersByUserIdQuery, useGetAverageMonthlyOrdersQuery } = userOrderApi;

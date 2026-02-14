@@ -8,7 +8,7 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
-import { useGetUsersQuery } from "../../Redux/Apis/usersApi";
+import { useGetAverageMonthlyOrdersQuery, useGetUsersQuery } from "../../Redux/Apis/usersApi";
 import GetUserOrdersDetail from "./GetuserOrdersDetail";
 
 const UserManagementSkeleton = () => {
@@ -97,6 +97,7 @@ const MiniSparkline = ({ data }) => {
 const UserManagement = () => {
   const { data: userData, isLoading, isError } = useGetUsersQuery();
   const [selectedUser, setSelectedUser] = useState(null);
+  const { data: averageMonthlyOrdersData, isLoading: isAverageMonthlyOrdersLoading } = useGetAverageMonthlyOrdersQuery();
 
 
   if (isLoading) return <UserManagementSkeleton />;
@@ -145,14 +146,19 @@ const UserManagement = () => {
     },
     {
       title: "Average Orders",
-      value: avgOrders.toFixed(1),
+      value: isAverageMonthlyOrdersLoading
+        ? "Loading..."
+        : averageMonthlyOrdersData?.avgOrdersPerMonth ?? 0,
       percent: "-12.5 % From Last Month",
       percentColor: "#AE000026",
       data: sparkData.avgOrders,
     },
   ];
 
-  return (
+  return <>
+
+    <pre className="ml-20">{JSON.stringify(averageMonthlyOrdersData, null, 2)}</pre>
+
     <div className=" bg-[#020523] lg:ml-23 text-white min-h-screen">
       {/* Page Header */}
       <h1 className="text-3xl font-manrope">Users</h1>
@@ -211,7 +217,7 @@ const UserManagement = () => {
         <UserList onViewUser={(user) => setSelectedUser(user)} />
       )}
     </div>
-  );
+  </>
 };
 
 export default UserManagement;
