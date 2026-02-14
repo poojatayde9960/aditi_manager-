@@ -18,17 +18,18 @@ const Orders = () => {
   const tabs = ["All", "Pending", "Processing", "Shipped", "Completed"];
 
   const orders = (data?.orders || []).map((order) => {
-    const totalItems = order.products?.reduce(
-      (sum, p) => sum + (p.qty || p.quantity || 0),
-      0
-    ) || 0;
+    const totalItems =
+      order.products?.reduce(
+        (sum, p) => sum + (p.qty || p.quantity || 0),
+        0
+      ) || 0;
 
-    const contact = order.userId?.phone || order.userId?.email || "N/A";
+    const contact = order.user?.phone || order.user?.email || "N/A";
 
     return {
       id: order._id?.slice(-6) || "N/A",
       orderId: order._id,
-      name: order.userId?.name || "N/A",
+      name: order.user?.name || "N/A",
       contact,
       items: totalItems,
       amount: `₹${order.totalAmount?.toLocaleString("en-IN") || 0}`,

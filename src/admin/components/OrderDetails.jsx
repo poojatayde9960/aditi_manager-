@@ -5,9 +5,19 @@ import { Icon } from "@iconify/react";
 import { useGetOdersByIdQuery } from "../../Redux/Apis/OrdersApi";
 
 const OrderDetails = ({ open, onClose, order }) => {
+  const statusStyles = {
+    Pending: "bg-yellow-500/20 text-yellow-400",
+    Processing: "bg-blue-500/20 text-blue-400",
+    Shipped: "bg-purple-500/20 text-purple-400",
+    Delivered: "bg-green-600/20 text-green-400",
+  };
   if (!open || !order?._id) return null;
 
-  const { data, isLoading } = useGetOdersByIdQuery(order._id);
+  const { data, isLoading } = useGetOdersByIdQuery(order._id, {
+    pollingInterval: 5000, // 5 seconds auto refresh
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const orderData = data?.order;
 
   if (isLoading || !orderData) {
@@ -54,10 +64,12 @@ const OrderDetails = ({ open, onClose, order }) => {
             </p>
           </div>
 
-          <span className="px-4 py-1 mt-3 inline-block mr-4 rounded-xl bg-green-700/20 text-green-400">
-            {orderData?.paymentStatus === "completed"
-              ? "Completed"
-              : "Pending"}
+          <span
+            className={`px-4 py-1 mt-3 inline-block mr-4 rounded-xl text-sm font-medium ${statusStyles[orderData?.Status] ||
+              "bg-gray-500/20 text-gray-400"
+              }`}
+          >
+            {orderData?.Status}
           </span>
         </div>
 
@@ -163,15 +175,40 @@ const OrderDetails = ({ open, onClose, order }) => {
               "Shipped",
               "Delivered",
             ].map((step, index) => {
-              const status = (orderData?.Status || orderData?.status || "Pending").toLowerCase();
-              const paymentStatus = (orderData?.paymentStatus || "").toLowerCase();
+
+              const statusFlow = ["Pending", "Processing", "Shipped", "Completed"];
+              const currentStatus = orderData?.Status || "Pending";
+              const currentIndex = statusFlow.indexOf(currentStatus);
+
+              const paymentCompleted =
+                orderData?.paymentStatus?.toLowerCase() === "completed";
+
               let isActive = false;
 
-              if (index === 0) isActive = true;
-              else if (index === 1) isActive = paymentStatus === "completed";
-              else if (index === 2) isActive = ["processing", "shipped", "delivered", "completed"].includes(status);
-              else if (index === 3) isActive = ["shipped", "delivered", "completed"].includes(status);
-              else if (index === 4) isActive = ["delivered", "completed"].includes(status);
+              if (index === 0) {
+                // Order Placed (always active)
+                isActive = true;
+              }
+
+              else if (index === 1) {
+                // 🔥 Payment Confirmed (STATIC LOGIC)
+                isActive = paymentCompleted;
+              }
+
+              else if (index === 2) {
+                // Processing (dynamic)
+                isActive = currentIndex >= 1;
+              }
+
+              else if (index === 3) {
+                // Shipped (dynamic)
+                isActive = currentIndex >= 2;
+              }
+
+              else if (index === 4) {
+                // Delivered (dynamic)
+                isActive = currentIndex >= 3;
+              }
 
               return (
                 <div
@@ -194,9 +231,46 @@ const OrderDetails = ({ open, onClose, order }) => {
                   <div>
                     <p className="font-medium">{step}</p>
                     <p className="text-gray-400 text-xs">
-                      {orderData?.createdAt
-                        ? new Date(orderData.createdAt).toLocaleString()
-                        : "N/A"}
+                      {(() => {
+                        if (index === 0) {
+                          // Order Placed → Pending timestamp
+                          const pending = orderData?.statusHistory?.find(
+                            (s) => s.status === "Pending"
+                          );
+                          return pending?.timestamp
+                            ? new Date(pending.timestamp).toLocaleString("en-IN")
+                            : "N/A";
+                        }
+
+                        if (index === 2) {
+                          const processing = orderData?.statusHistory?.find(
+                            (s) => s.status === "Processing"
+                          );
+                          return processing?.timestamp
+                            ? new Date(processing.timestamp).toLocaleString("en-IN")
+                            : "N/A";
+                        }
+
+                        if (index === 3) {
+                          const shipped = orderData?.statusHistory?.find(
+                            (s) => s.status === "Shipped"
+                          );
+                          return shipped?.timestamp
+                            ? new Date(shipped.timestamp).toLocaleString("en-IN")
+                            : "N/A";
+                        }
+
+                        if (index === 4) {
+                          const completed = orderData?.statusHistory?.find(
+                            (s) => s.status === "Completed"
+                          );
+                          return completed?.timestamp
+                            ? new Date(completed.timestamp).toLocaleString("en-IN")
+                            : "N/A";
+                        }
+
+                        return "N/A"; // Payment Confirmed (static)
+                      })()}
                     </p>
                   </div>
                 </div>

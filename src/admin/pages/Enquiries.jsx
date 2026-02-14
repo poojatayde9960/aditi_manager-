@@ -21,7 +21,7 @@ const Enquiries = () => {
       name: item.name,
       email: item.email,
       phone: item.contact,
-      message: "Customer enquiry received",
+      message: item.message,   // ✅ HE CHANGE KAR
       status: item.status?.trim(),
       date: dateObj.toLocaleDateString("en-IN"),
       time: dateObj.toLocaleTimeString("en-IN", {
