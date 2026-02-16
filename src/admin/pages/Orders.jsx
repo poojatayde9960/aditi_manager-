@@ -32,7 +32,7 @@ const Orders = () => {
       name: order.user?.name || "N/A",
       contact,
       items: totalItems,
-      amount: `₹${order.totalAmount?.toLocaleString("en-IN") || 0}`,
+      amount: `€${order.totalAmount?.toLocaleString("en-IN") || 0}`,
       status: order.Status || "Pending",
       date: order.createdAt
         ? new Date(order.createdAt).toLocaleDateString("en-IN")
@@ -120,7 +120,7 @@ const Orders = () => {
 
   return (
     <>
-      <div className="bg-[#020523] lg:ml-23 mt-5 min-h-screen text-white pb-10">
+      <div className="bg-[#020523] md:ml-23 mt-5 min-h-screen text-white pb-10">
         {/* Header */}
         <div className="flex justify-between items-start flex-col md:flex-row gap-4">
           <div className="-mt-7">

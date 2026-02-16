@@ -33,7 +33,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
     /* ================= LOADING ================= */
     if (isLoading) {
         return (
-            <div className="min-h-screen text-white mt-4 md:mt-8 md:ml-24 max-w-7xl px-4 md:px-0 animate-pulse">
+            <div className="min-h-screen text-white mt-4 md:mt-8 md:ml-23 max-w-7xl px-4 md:px-0 animate-pulse">
                 <div className="h-4 w-32 bg-slate-700 rounded mb-6" />
                 <div className="h-6 w-56 bg-slate-700 rounded mb-2" />
                 <div className="h-3 w-72 bg-slate-700 rounded mb-6" />
@@ -60,14 +60,14 @@ const GetUserOrdersDetail = ({ onBack }) => {
     }
 
     return (
-        <div className="text-white mt-4 md:mt-8 md:ml-24  px-4 md:px-0">
+        <div className="text-white mt-4 md:mt-8 md:ml-23  px-4 md:px-0">
             {/* Back */}
             <button
                 onClick={() => navigate('/user-management')}
                 className="flex items-center gap-2 text-slate-400 hover:text-white mb-4"
             >
                 <ArrowLeft size={20} />
-                Back to Users
+                Users/Customer Details
             </button>
 
             {/* Header */}
@@ -101,7 +101,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
 
                 <div className="mt-6 pt-6 border-t border-slate-700/50">
                     <div className="text-2xl md:text-3xl font-bold text-[#22FF00]">
-                        ${user?.totalSpent || 0}
+                        €{user?.totalSpent || 0}
                     </div>
                     <p className="text-slate-400 text-sm">Total Spent</p>
                 </div>
@@ -151,7 +151,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
                                         {order.status || order.Status}
                                     </span>
                                     <span className="text-[#22FF00] font-bold">
-                                        ${order.totalAmount}
+                                        €{order.totalAmount}
                                     </span>
                                     <ChevronDown size={18} />
                                 </div>
@@ -190,7 +190,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
                         giftData.gifts.map(gift => (
                             <div key={gift._id} className="bg-[#0B1135] border border-white/10 rounded-2xl p-4">
                                 <p className="font-semibold">{gift.GiftName}</p>
-                                <p className="text-sm text-slate-400">₹{gift.Giftvalue}</p>
+                                <p className="text-sm text-slate-400">€{gift.Giftvalue}</p>
                                 <p className="text-xs text-slate-500">{gift.Reasonforgift}</p>
                             </div>
                         ))

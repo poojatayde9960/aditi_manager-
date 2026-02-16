@@ -48,7 +48,7 @@ const TopSellingAndOrders = () => {
         name: item.name,
         image: item.image,
         sales: `${item.totalSold} Sales`,
-        price: `₹${item.price}`,
+        price: `€${item.price}`,
         percent: `${percent}%`,
         percentColor:
           percent > 30
@@ -84,7 +84,7 @@ const TopSellingAndOrders = () => {
             : order.paymentStatus === "pending"
               ? "bg-[#D9FF0030] text-[#D9FF00]"
               : "bg-[#00D4FF0F] text-[#00D4FF]",
-        name: order.userId?.name || "Customer",
+        name: order.user?.name || "Customer",
         product:
           order.products?.[0]?.productId?.name ||
           `${order.products?.length} Products`,
@@ -193,7 +193,7 @@ const TopSellingAndOrders = () => {
                   <div>
                     <div className="flex items-center gap-3 mb-1">
                       <p className="text-white text-sm font-medium">
-                        {order.orderId}
+                        {order.name}
                       </p>
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${order.statusColor}`}

@@ -3,7 +3,7 @@ import giftsimg from '../../../public/mdi_gift.png';
 import { Search, Plus, Pencil, Trash2, LayoutGrid, List, Image as ImageIcon, X } from 'lucide-react';
 
 const Gifts = () => {
-  const [activeModal, setActiveModal] = useState(null); 
+  const [activeModal, setActiveModal] = useState(null);
   // View mode state: 'grid' or 'list'
   const [viewMode, setViewMode] = useState('grid');
 
@@ -13,8 +13,8 @@ const Gifts = () => {
   ];
 
   return (
-    <div className="min-h-screen lg:ml-20 bg-[#05091d] text-white p-4 md:p-5 font-sans">
-      
+    <div className="min-h-screen md:ml-23 bg-[#05091d] text-white p-4 md:p-5 font-sans">
+
       {/* --- HEADER --- */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <div>
@@ -22,12 +22,12 @@ const Gifts = () => {
           <p className="text-gray-400 text-sm">Manage Your Gift Collection</p>
         </div>
         <div className="flex gap-3">
-            <button 
+          <button
             onClick={() => setActiveModal('gift')}
             className="bg-[#00c2ff] hover:bg-[#00a8dd] text-white font-bold py-2 px-6 rounded-xl flex items-center gap-2 transition-all"
-            >
+          >
             <Plus size={18} /> Add Gift
-            </button>
+          </button>
         </div>
       </div>
 
@@ -42,13 +42,13 @@ const Gifts = () => {
           />
         </div>
         <div className="flex gap-2 bg-[#1a2245] p-1 rounded-lg">
-          <button 
+          <button
             onClick={() => setViewMode('grid')}
             className={`p-1.5 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[#00c2ff]/20 text-[#00c2ff]' : 'text-gray-500'}`}
           >
             <LayoutGrid size={18} />
           </button>
-          <button 
+          <button
             onClick={() => setViewMode('list')}
             className={`p-1.5 rounded-md transition-all ${viewMode === 'list' ? 'bg-[#00c2ff]/20 text-[#00c2ff]' : 'text-gray-500'}`}
           >
@@ -61,23 +61,23 @@ const Gifts = () => {
       {viewMode === 'grid' ? (
         /* GRID VIEW (As per your existing UI) */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gifts.map((gift) => (
+          {gifts.map((gift) => (
             <div key={gift.id} className="bg-[#0a102b] border border-gray-800 rounded-3xl p-6 flex items-center justify-between">
-                <div className="flex items-center gap-5">
+              <div className="flex items-center gap-5">
                 <div className="rounded-2xl flex items-center justify-center shadow-lg">
-                    <img src={giftsimg} className='h-10' alt="" />
+                  <img src={giftsimg} className='h-10' alt="" />
                 </div>
                 <div>
-                    <h3 className="text-xl font-medium">{gift.name}</h3>
-                    <p className="text-gray-400 mt-1">{gift.price}</p>
+                  <h3 className="text-xl font-medium">{gift.name}</h3>
+                  <p className="text-gray-400 mt-1">{gift.price}</p>
                 </div>
-                </div>
-                <div className="flex flex-col gap-2">
+              </div>
+              <div className="flex flex-col gap-2">
                 <button className="p-2.5 bg-[#1a2245] border border-gray-700 rounded-xl text-gray-400 hover:text-white"><Pencil size={18} /></button>
                 <button className="p-2.5 bg-[#1a2245] border border-gray-700 rounded-xl text-red-500 hover:bg-red-500/10"><Trash2 size={18} /></button>
-                </div>
+              </div>
             </div>
-            ))}
+          ))}
         </div>
       ) : (
         /* LIST VIEW (Table UI as per image_41f9fb.png) */

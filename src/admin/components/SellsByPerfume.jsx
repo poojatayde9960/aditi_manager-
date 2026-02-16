@@ -79,6 +79,7 @@ const SellsByPerfume = () => {
                                 outerRadius={80}
                                 dataKey="value"
                                 paddingAngle={3}
+                                fill="#FFFFFF"
                                 stroke="#0B1135"
                                 strokeWidth={5}
                             >
@@ -88,15 +89,17 @@ const SellsByPerfume = () => {
                             </Pie>
 
                             <Tooltip
-                                formatter={(value, name, props) =>
-                                    `${props.payload.displayValue}%`
-                                }
+                                formatter={(value, name, props) => [
+                                    `${props.payload.displayValue}%`,
+                                    props.payload.name
+                                ]}
                                 contentStyle={{
                                     backgroundColor: "#020523",
                                     borderColor: "#ffffff20",
-                                    color: "#fff",
                                     borderRadius: "8px",
                                 }}
+                                itemStyle={{ color: "#FFFFFF" }}
+                                labelStyle={{ color: "#FFFFFF" }}
                             />
                         </PieChart>
                     </ResponsiveContainer>

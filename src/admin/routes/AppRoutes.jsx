@@ -18,6 +18,7 @@ import Gifts from "../pages/Gifts";
 import Login from "../pages/Login";
 import AdminProtector from "./AdminProtector";
 import GetUserOrdersDetail from "../pages/GetuserOrdersDetail";
+import AddProduct from "../pages/AddProduct";
 
 const AppRoutes = () => {
   return (
@@ -35,7 +36,9 @@ const AppRoutes = () => {
         <Route path="user-management" element={<UserManagement />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="products" element={<Products />} />
+        <Route path="admin/products" element={<Products />} />
+        <Route path="admin/products/add" element={<AddProduct />} />
+        <Route path="admin/products/edit/:id" element={<AddProduct />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="enquiries" element={<Enquiries />} />
         <Route path="customer-detail" element={<CustomerDetail />} />

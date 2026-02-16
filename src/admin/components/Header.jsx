@@ -6,7 +6,7 @@ const Header = ({ toggleSidebar, theme, setTheme }) => {
   // const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   return (
-    <header className="fixed top-0 right-0 z-10 
+    <header className="fixed top-0 right-0 z-50 
       bg-white/5 backdrop-blur-xl border-b border-white/10 px-4 py-3
       w-full md:w-[calc(100%-92px)] md:ml-23"
     >

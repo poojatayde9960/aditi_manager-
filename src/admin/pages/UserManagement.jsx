@@ -13,7 +13,7 @@ import GetUserOrdersDetail from "./GetuserOrdersDetail";
 
 const UserManagementSkeleton = () => {
   return (
-    <div className="bg-[#020523] lg:ml-23 text-white min-h-screen animate-pulse">
+    <div className="bg-[#020523] md:ml-23 text-white min-h-screen animate-pulse">
       {/* Header */}
       <div className="h-8 w-32 bg-[#11183C] rounded mb-2"></div>
       <div className="h-3 w-48 bg-[#11183C] rounded mb-8"></div>
@@ -157,9 +157,9 @@ const UserManagement = () => {
 
   return <>
 
-    <pre className="ml-20">{JSON.stringify(averageMonthlyOrdersData, null, 2)}</pre>
+    {/* <pre className="ml-20">{JSON.stringify(averageMonthlyOrdersData, null, 2)}</pre> */}
 
-    <div className=" bg-[#020523] lg:ml-23 text-white min-h-screen">
+    <div className=" bg-[#020523] md:ml-23 text-white min-h-screen">
       {/* Page Header */}
       <h1 className="text-3xl font-manrope">Users</h1>
       <p className="text-gray-400 text-xs font-manrope mb-8">

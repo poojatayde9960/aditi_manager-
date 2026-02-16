@@ -24,7 +24,7 @@ const AdminDashboard = () => {
   const stats = [
     {
       title: "Total Revenue",
-      value: isLoading ? "Loading..." : `$${data?.data?.totalRevenue ?? 0}`,
+      value: isLoading ? "Loading..." : `€${data?.data?.totalRevenue ?? 0}`,
       percent: "+12.5%",
       icon: "mdi:dollar",
       chartColor: "#00D4FF",
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
 
 
   return (
-    <div className="min-h-screen lg:ml-23 overflow-hidden  text-white  pb-10">
+    <div className="min-h-screen md:ml-23 overflow-hidden  text-white  pb-10">
 
       {/* Page Header */}
       <div className="mb-8">

@@ -16,7 +16,15 @@ export const enquiryApi = createApi({
         enquiryStatus: builder.mutation({
             query: ({ id }) => ({
                 url: `/users/contactus/Contacted/${id}`,
-                method: "PUT", // ✅ POST → PUT
+                method: "PUT",
+            }),
+            invalidatesTags: ["enquiry"],
+        }),
+        managerContactResolve: builder.mutation({
+            query: ({ id, body }) => ({
+                url: `manager/contact/resolve/${id}`,
+                method: "PUT",
+                body,
             }),
             invalidatesTags: ["enquiry"],
         }),
@@ -30,4 +38,4 @@ export const enquiryApi = createApi({
     }),
 });
 
-export const { useGetEnquiryQuery, useEnquiryStatusMutation, useEnquiryDeleteMutation } = enquiryApi;
+export const { useGetEnquiryQuery, useEnquiryStatusMutation, useEnquiryDeleteMutation, useManagerContactResolveMutation } = enquiryApi;

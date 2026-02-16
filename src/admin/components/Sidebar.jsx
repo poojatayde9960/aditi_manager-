@@ -8,7 +8,7 @@ const menuItems = [
   { name: "Users", path: "/user-management", icon: "heroicons-solid:user-group" },
   // { name: "Analytics", path: "//analytics", icon: "simple-line-icons:chart" },
   { name: "Orders", path: "/orders", icon: "solar:bag-bold" },
-  { name: "Products", path: "/products", icon: "mingcute:add-circle-fill" },
+  { name: "Products", path: "/admin/products", icon: "mingcute:add-circle-fill" },
   // { name: "Transactions", path: "//transactions", icon: "solar:bag-check-bold" },
   { name: "Messages", path: "/enquiries", icon: "majesticons:messages" },
   // { name: "Blogs", path: "//blog", icon: "f7:doc-text-fill" },
@@ -72,7 +72,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* ================= DESKTOP SIDEBAR (UNCHANGED) ================= */}
       <aside
         className="
-          hidden md:flex fixed top-0 left-0 z-50 h-full w-[91px]
+          hidden md:flex fixed top-0 left-0 z-[60] h-full w-[91px]
           bg-[#020523] flex-col items-center py-6
           border-r border-white/5 shadow-2xl
         "

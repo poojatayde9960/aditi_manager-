@@ -9,7 +9,7 @@ const Analytics = () => {
     {
       title: "Total Visitors",
       value: "328,500",
-      icon:"IoAnalyticsSharp",
+      icon: "IoAnalyticsSharp",
       percent: "+12.5 %",
     },
     {
@@ -30,7 +30,7 @@ const Analytics = () => {
   ];
 
   return (
-    <div className=" bg-[#020523] lg:ml-23 mt-5 font- text-white min-h-screen">
+    <div className=" bg-[#020523] md:ml-23 mt-5 font- text-white min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="-mt-15">

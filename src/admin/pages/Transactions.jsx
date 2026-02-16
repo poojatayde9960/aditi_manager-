@@ -31,7 +31,7 @@ const Transactions = () => {
   ];
 
   return (
-    <div className="p-2 md:p-5 lg:ml-23   bg-[#020523] text-[#BEBEBE] min-h-screen">
+    <div className="p-2 md:p-5 md:ml-23   bg-[#020523] text-[#BEBEBE] min-h-screen">
       {/* TITLE */}
       <div className="flex justify-between">
         <div>
@@ -70,26 +70,26 @@ const Transactions = () => {
       </div>
 
       {/* SEARCH + FILTER + EXPORT */}
-    <div className="items-center mt-10 p-4 border border-[#00D4FF0F] bg-[#0B1135] rounded-xl">
-  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
-    {/* SEARCH BAR */}
-    <div className="flex items-center gap-3 bg-[#0B1135] border border-[#00D4FF0F] px-4 py-3 rounded-xl w-full sm:max-w-md">
-      <FaSearch className="text-gray-400" />
-      <input
-        type="text"
-        placeholder="Search"
-        className="bg-transparent outline-none w-full text-gray-300"
-      />
-    </div>
+      <div className="items-center mt-10 p-4 border border-[#00D4FF0F] bg-[#0B1135] rounded-xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
+          {/* SEARCH BAR */}
+          <div className="flex items-center gap-3 bg-[#0B1135] border border-[#00D4FF0F] px-4 py-3 rounded-xl w-full sm:max-w-md">
+            <FaSearch className="text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="bg-transparent outline-none w-full text-gray-300"
+            />
+          </div>
 
-    {/* STATUS FILTER */}
-    <button className="flex items-center gap-2 bg-[#0B1135] border border-white/40 px-5 py-3 rounded-xl w-full sm:w-auto text-gray-300 hover:bg-white/10 transition justify-center">
-      <FiFilter className="text-xl" />
-      All Status
-      <span className="text-lg">▾</span>
-    </button>
-  </div>
-</div>
+          {/* STATUS FILTER */}
+          <button className="flex items-center gap-2 bg-[#0B1135] border border-white/40 px-5 py-3 rounded-xl w-full sm:w-auto text-gray-300 hover:bg-white/10 transition justify-center">
+            <FiFilter className="text-xl" />
+            All Status
+            <span className="text-lg">▾</span>
+          </button>
+        </div>
+      </div>
 
 
       {/* TABLE */}

@@ -113,7 +113,7 @@ export default function CustomerDetails() {
   return (
     <>
       {/* <pre className='ml-20'>{JSON.stringify(order, null, 2)}</pre> */}
-      <div className="min-h-screen ml-20 bg-[#020523] text-white p-5">
+      <div className="min-h-screen md:ml-23 bg-[#020523] text-white p-5">
         <div className="max-w-10xl mx-auto">
           {/* Header */}
           <div className="mb-8">
@@ -151,7 +151,7 @@ export default function CustomerDetails() {
             {/* Total Spent */}
             <div className="mt-6 pt-6 border-t border-slate-700/50">
               <div className="text-3xl font-bold text-[#22FF00]">
-                ${totalAmount.toLocaleString()}
+                €${totalAmount.toLocaleString()}
               </div>
               <div className="text-slate-400 text-sm">Total Spent</div>
             </div>
@@ -192,7 +192,7 @@ export default function CustomerDetails() {
                     {orderStatus}
                   </span>
                   <span className="text-2xl font-bold text-[#22FF00]">
-                    ${totalAmount.toLocaleString()}
+                    €${totalAmount.toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function CustomerDetails() {
                           </div>
                         </div>
                         <div className="text-[#22FF00] font-semibold">
-                          ${Number(item.productId?.price || 0).toLocaleString()}
+                          €${Number(item.productId?.price || 0).toLocaleString()}
                         </div>
                       </div>
                       {index < products.length - 1 && <hr className="my-2 border-slate-700" />}
@@ -328,7 +328,7 @@ export default function CustomerDetails() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between text-slate-300">
                   <span>Total Amount</span>
-                  <span className="text-[#22FF00] font-bold">${totalAmount.toLocaleString()}</span>
+                  <span className="text-[#22FF00] font-bold">€${totalAmount.toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function CustomerDetails() {
               ) : giftData ? (
                 <div className="text-center">
                   <h3 className="text-lg font-semibold">{giftData.GiftName}</h3>
-                  <p className="text-slate-400">Value: ₹{giftData.Giftvalue}</p>
+                  <p className="text-slate-400">Value: €{giftData.Giftvalue}</p>
                 </div>
               ) : (
                 <p className="text-slate-400 text-center">No gift found</p>
@@ -404,7 +404,7 @@ export default function CustomerDetails() {
 
                   <div>
                     <label className="block text-sm text-gray-300 mb-1">
-                      Gift Value ($) <span className="text-red-500">*</span>
+                      Gift Value (€) <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="number"

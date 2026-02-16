@@ -12,7 +12,7 @@ const Blog = () => {
     const blogs = [1, 2, 3, 4];
 
     return (
-        <div className="min-h-screen lg:ml-20 bg-[#05091d] text-white p-3 font-sans relative">
+        <div className="min-h-screen md:ml-23 bg-[#05091d] text-white p-3 font-sans relative">
 
             {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -87,7 +87,7 @@ const Blog = () => {
                                         {/* Icon */}
                                         <Icon icon="basil:image-solid"
                                             className="w-5 h-5 text-gray-400"
-                                            
+
                                         >
                                             <path strokeLinecap="round" strokeLinejoin="round"
                                                 d="M3 16l4-4a2 2 0 012.828 0L14 16m-2-2l1.172-1.172a2 2 0 012.828 0L21 16m-9-4v-6" />
@@ -120,7 +120,7 @@ const Blog = () => {
                                         {/* Icon */}
                                         <Icon icon="basil:image-solid"
                                             className="w-5 h-5 text-gray-400"
-                                           
+
                                         >
                                             <path strokeLinecap="round" strokeLinejoin="round"
                                                 d="M3 16l4-4a2 2 0 012.828 0L14 16m-2-2l1.172-1.172a2 2 0 012.828 0L21 16m-9-4v-6" />
