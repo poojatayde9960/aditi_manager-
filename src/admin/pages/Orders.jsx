@@ -5,6 +5,63 @@ import OrderDetails from "../components/OrderDetails";
 import { useGetOdersQuery } from "../../Redux/Apis/OrdersApi";
 import { useUpdateStatusMutation } from "../../Redux/Apis/updateStatusApi";
 
+const OrdersSkeleton = () => {
+  return (
+    <div className="bg-[#020523] min-h-screen mt-10 text-white pb-10 animate-pulse px-4 md:px-8">
+      {/* Header Skeleton */}
+      <div className="flex justify-between -mt-8 items-start flex-col md:flex-row gap-4">
+        <div>
+          <div className="h-8 w-48 bg-white/10 rounded-lg mb-2"></div>
+          <div className="h-4 w-64 bg-white/5 rounded-lg"></div>
+        </div>
+        <div className="h-12 w-32 bg-white/10 rounded-xl"></div>
+      </div>
+
+      {/* Tabs + Search Skeleton */}
+      <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-0 rounded-lg bg-[#0b1135] p-2 items-stretch md:items-center mt-6">
+        <div className="flex gap-3 overflow-x-auto overflow-y-hidden w-full md:w-auto">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="h-12 w-24 md:w-32 bg-white/5 rounded-xl shrink-0"></div>
+          ))}
+        </div>
+        <div className="h-12 w-full md:w-[380px] bg-[#020523] rounded-2xl border border-white/5"></div>
+      </div>
+
+      {/* Table Skeleton */}
+      <div className="bg-[#0b1135] border border-white/10 rounded-3xl overflow-hidden mt-8 shadow-xl">
+        <div className="p-6 space-y-6">
+          {/* Header row placeholders */}
+          <div className="grid grid-cols-9 gap-4 pb-4 border-b border-white/10">
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className="h-4 bg-white/10 rounded w-16 mx-auto"></div>
+            ))}
+          </div>
+          {/* Row placeholders */}
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="grid grid-cols-9 gap-4 items-center py-4 border-b border-white/5 last:border-0">
+              <div className="h-4 bg-white/10 rounded w-12 mx-auto"></div>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-white/10 rounded-full shrink-0"></div>
+                <div className="space-y-2 flex-1">
+                  <div className="h-4 bg-white/10 rounded w-20"></div>
+                  <div className="h-3 bg-white/5 rounded w-32"></div>
+                </div>
+              </div>
+              <div className="h-4 bg-white/5 rounded w-8 mx-auto"></div>
+              <div className="h-4 bg-white/10 rounded w-16 mx-auto"></div>
+              <div className="h-6 bg-white/10 rounded-lg w-20 mx-auto"></div>
+              <div className="h-4 bg-white/5 rounded w-20 mx-auto"></div>
+              <div className="h-6 bg-white/10 rounded-lg w-16 mx-auto"></div>
+              <div className="h-5 bg-white/10 rounded w-5 mx-auto"></div>
+              <div className="h-10 bg-white/10 rounded-lg w-24 mx-auto"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Orders = () => {
   const { data, isLoading, refetch } = useGetOdersQuery();
   const [updateStatus, { isLoading: isUpdating }] = useUpdateStatusMutation();
@@ -14,6 +71,8 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
+
+  if (isLoading) return <OrdersSkeleton />;
 
   const tabs = ["All", "Pending", "Processing", "Shipped", "Completed"];
 
@@ -120,11 +179,11 @@ const Orders = () => {
 
   return (
     <>
-      <div className="bg-[#020523] md:ml-23 mt-5 min-h-screen text-white pb-10">
+      <div className="bg-[#020523] min-h-screen mt-10 text-white pb-10">
         {/* Header */}
-        <div className="flex justify-between items-start flex-col md:flex-row gap-4">
-          <div className="-mt-7">
-            <h1 className="text-3xl font-manrope">Orders</h1>
+        <div className="flex justify-between -mt-8 items-start flex-col md:flex-row gap-4">
+          <div className="">
+            <h1 className="page-header-title">Orders</h1>
             <p className="text-gray-400 text-xs mt-1">Manage Customer Orders And Fulfillment</p>
           </div>
 
@@ -180,15 +239,7 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {isLoading && (
-                <tr>
-                  <td colSpan={9} className="text-center py-12 text-gray-500 text-lg">
-                    Loading Orders...
-                  </td>
-                </tr>
-              )}
-
-              {!isLoading && filteredOrders.length === 0 && (
+              {filteredOrders.length === 0 && (
                 <tr>
                   <td colSpan={9} className="text-center py-12 text-gray-500 text-lg">
                     No Orders Found

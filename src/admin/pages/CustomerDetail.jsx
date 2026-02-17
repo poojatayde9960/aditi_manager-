@@ -21,7 +21,7 @@ export default function CustomerDetails() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen ml-24 mt-8 max-w-6xl text-white">
+      <div className="min-h-screen text-white">
         {/* Back button skeleton */}
         <div className="h-4 w-32 bg-slate-700 rounded mb-6 animate-pulse"></div>
 
@@ -113,7 +113,7 @@ export default function CustomerDetails() {
   return (
     <>
       {/* <pre className='ml-20'>{JSON.stringify(order, null, 2)}</pre> */}
-      <div className="min-h-screen md:ml-23 bg-[#020523] text-white p-5">
+      <div className="min-h-screen bg-[#020523] text-white">
         <div className="max-w-10xl mx-auto">
           {/* Header */}
           <div className="mb-8">

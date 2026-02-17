@@ -72,9 +72,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* ================= DESKTOP SIDEBAR (UNCHANGED) ================= */}
       <aside
         className="
-          hidden md:flex fixed top-0 left-0 z-[60] h-full w-[91px]
+          hidden md:flex fixed top-0 left-0 z-[60] h-full w-[92px]
           bg-[#020523] flex-col items-center py-6
-          border-r border-white/5 shadow-2xl
+          shadow-2xl
         "
       >
         {/* DECORATION */}

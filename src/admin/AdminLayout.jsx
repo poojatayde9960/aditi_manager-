@@ -9,13 +9,13 @@ const AdminLayout = () => {
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     return (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex h-screen overflow-hidden bg-[#020523]">
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-            <div className="flex flex-col flex-1 overflow-hidden relative">
+            <div className="flex flex-col flex-1 overflow-hidden relative bg-[#020523]">
                 <Header toggleSidebar={toggleSidebar} />
 
-                <main className="flex-1 overflow-y-auto p-4 pt-24 bg-[#020523] text-white">
+                <main className="flex-1 overflow-y-auto md:ml-23 px-4 md:px-10 pt-24 bg-[#020523] text-white">
                     <Outlet />
                 </main>
             </div>

@@ -33,7 +33,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
     /* ================= LOADING ================= */
     if (isLoading) {
         return (
-            <div className="min-h-screen text-white mt-4 md:mt-8 md:ml-23 max-w-7xl px-4 md:px-0 animate-pulse">
+            <div className="min-h-screen text-white animate-pulse">
                 <div className="h-4 w-32 bg-slate-700 rounded mb-6" />
                 <div className="h-6 w-56 bg-slate-700 rounded mb-2" />
                 <div className="h-3 w-72 bg-slate-700 rounded mb-6" />
@@ -60,7 +60,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
     }
 
     return (
-        <div className="text-white mt-4 md:mt-8 md:ml-23  px-4 md:px-0">
+        <div className="text-white">
             {/* Back */}
             <button
                 onClick={() => navigate('/user-management')}

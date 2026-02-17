@@ -13,7 +13,7 @@ const Gifts = () => {
   ];
 
   return (
-    <div className="min-h-screen md:ml-23 bg-[#05091d] text-white p-4 md:p-5 font-sans">
+    <div className="min-h-screen bg-[#020523] text-white font-sans">
 
       {/* --- HEADER --- */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
@@ -81,39 +81,39 @@ const Gifts = () => {
         </div>
       ) : (
         /* LIST VIEW (Table UI as per image_41f9fb.png) */
-        <div className="overflow-x-auto bg-[#0a102b] border border-gray-800 rounded-2xl">
+        <div className="overflow-x-auto bg-[#0B1135]/50 border border-white/10 rounded-2xl shadow-2xl">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400 text-sm">
-                <th className="p-4 font-medium">Product ID</th>
-                <th className="p-4 font-medium">Product Name</th>
-                <th className="p-4 font-medium">Amount</th>
-                <th className="p-4 font-medium">Stock</th>
-                <th className="p-4 font-medium">Sales</th>
-                <th className="p-4 font-medium">Action</th>
+              <tr className="text-gray-400 text-[11px] uppercase tracking-[0.1em] border-b border-white/10 bg-white/[0.01]">
+                <th className="py-5 px-6 font-semibold">Product ID</th>
+                <th className="py-5 px-6 font-semibold">Product Name</th>
+                <th className="py-5 px-6 font-semibold">Amount</th>
+                <th className="py-5 px-6 font-semibold">Stock</th>
+                <th className="py-5 px-6 font-semibold">Sales</th>
+                <th className="py-5 px-6 font-semibold text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="text-sm">
+            <tbody className="divide-y divide-white/5">
               {gifts.map((gift) => (
-                <tr key={gift.id} className="border-b border-gray-800/50 hover:bg-white/5 transition-colors">
-                  <td className="p-4 text-gray-300 font-mono">{gift.id}</td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#1a2245] rounded-lg flex items-center justify-center">
+                <tr key={gift.id} className="hover:bg-white/[0.02] transition-colors group text-sm">
+                  <td className="py-5 px-6 text-gray-400 font-mono text-xs font-medium">{gift.id}</td>
+                  <td className="py-5 px-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-[#141A3A] rounded-xl flex items-center justify-center border border-white/10 group-hover:border-cyan-400/40 transition-all">
                         <img src={giftsimg} className="h-6" alt="" />
                       </div>
-                      <span>{gift.name}</span>
+                      <span className="font-semibold text-white group-hover:text-cyan-400 transition-colors">{gift.name}</span>
                     </div>
                   </td>
-                  <td className="p-4 text-gray-300">{gift.price}</td>
-                  <td className="p-4 text-[#22FF00]">{gift.stock}</td>
-                  <td className="p-4 text-gray-300">{gift.sales}</td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <button className="p-2 bg-[#1a2245] rounded-lg text-[#00c2ff] hover:bg-[#252d58]">
+                  <td className="py-5 px-6 font-medium text-gray-300">{gift.price}</td>
+                  <td className="py-5 px-6 font-bold text-[#22FF00]">{gift.stock}</td>
+                  <td className="py-5 px-6 font-medium text-gray-300">{gift.sales}</td>
+                  <td className="py-5 px-6 text-right">
+                    <div className="flex justify-end gap-2.5">
+                      <button className="p-2 bg-white/5 border border-white/10 rounded-lg text-[#00c2ff] hover:bg-[#00c2ff] hover:text-[#020523] transition-all">
                         <Pencil size={16} />
                       </button>
-                      <button className="p-2 bg-[#1a2245] rounded-lg text-red-500 hover:bg-red-500/10">
+                      <button className="p-2 bg-red-500/5 border border-red-500/10 rounded-lg text-red-500 hover:bg-red-500 hover:text-white transition-all">
                         <Trash2 size={16} />
                       </button>
                     </div>

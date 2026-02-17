@@ -30,7 +30,7 @@ const Analytics = () => {
   ];
 
   return (
-    <div className=" bg-[#020523] md:ml-23 mt-5 font- text-white min-h-screen">
+    <div className=" bg-[#020523] text-white min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="-mt-15">

@@ -60,11 +60,11 @@ const AdminDashboard = () => {
 
 
   return (
-    <div className="min-h-screen md:ml-23 overflow-hidden  text-white  pb-10">
+    <div className="bg-[#020523] text-white min-h-screen">
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="font-manrope text-2xl ">Dashboard</h1>
+        <h1 className="page-header-title">Dashboard</h1>
         <p className="font-poppins text-gray-400 text-sm">Overview of performance and activity</p>
 
 

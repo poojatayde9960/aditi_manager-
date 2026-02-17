@@ -31,7 +31,7 @@ const Transactions = () => {
   ];
 
   return (
-    <div className="p-2 md:p-5 md:ml-23   bg-[#020523] text-[#BEBEBE] min-h-screen">
+    <div className="bg-[#020523] text-[#BEBEBE] min-h-screen">
       {/* TITLE */}
       <div className="flex justify-between">
         <div>
@@ -93,60 +93,59 @@ const Transactions = () => {
 
 
       {/* TABLE */}
-      <div className="mt-6 sm:mt-10 bg-[#0B1135] border border-[#FFFFFF4A] rounded-3xl overflow-x-auto">
-        <table className="w-full min-w-[600px] text-left">
-          <thead className="text-[#A19F9F] text-sm border-b border-white/10">
-            <tr>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Transaction ID</th>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Customer</th>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Pay Method</th>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Amount</th>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Status</th>
-              <th className="py-4 px-4 sm:px-6 font-manrope">Date</th>
-              {/* <th className="py-4 px-4 sm:px-6 font-manrope">Action</th> */}
-            </tr>
-          </thead>
-
-          <tbody className="text-gray-200 font-manrope text-sm sm:text-base">
-            {data.map((t, index) => (
-              <tr key={index} className="border-b border-white/5">
-                <td className="py-4 px-4 sm:px-6">{t.id}</td>
-
-                <td className="py-4 px-4 sm:px-6 flex items-center gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#141A3A] rounded-full flex items-center justify-center text-[#00c8ff] font-manrope text-sm sm:text-base">
-                    SC
-                  </div>
-                  <div>
-                    <p>{t.name}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">{t.phone}</p>
-                  </div>
-                </td>
-
-                <td className="py-4 px-4 sm:px-6 text-gray-300">{t.method}</td>
-                <td className="py-4 px-4 sm:px-6 text-[#22FF00]">{t.amount}</td>
-
-                <td className="py-4 px-4 sm:px-6">
-                  <span
-                    className={`px-3 py-1 rounded-lg text-sm ${t.statusColor}`}
-                  >
-                    {t.status}
-                  </span>
-                </td>
-
-                <td className="py-4 px-4 sm:px-6">
-                  <p>{t.date}</p>
-                  <p className="text-gray-400 text-xs sm:text-sm">{t.time}</p>
-                </td>
-
-                {/* <td className="py-4 px-4 sm:px-6">
-                  <button className="text-[#00d2ff] hover:text-white text-lg sm:text-xl">
-                    👁
-                  </button>
-                </td> */}
+      <div className="mt-8 bg-[#0B1135]/50 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="text-gray-400 text-[11px] uppercase tracking-[0.1em] border-b border-white/10 bg-white/[0.01]">
+                <th className="py-5 px-6 font-semibold">Transaction ID</th>
+                <th className="py-5 px-6 font-semibold">Customer</th>
+                <th className="py-5 px-6 font-semibold">Payment Method</th>
+                <th className="py-5 px-6 font-semibold">Amount</th>
+                <th className="py-5 px-6 font-semibold text-center">Status</th>
+                <th className="py-5 px-6 font-semibold text-right">Date/Time</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className="divide-y divide-white/5">
+              {data.map((item, index) => (
+                <tr key={index} className="hover:bg-white/[0.02] transition-colors group text-sm">
+                  <td className="py-5 px-6">
+                    <span className="text-gray-400 font-mono text-xs font-medium">{item.id}</span>
+                  </td>
+                  <td className="py-5 px-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-[#141A3A] rounded-full flex items-center justify-center text-cyan-400 font-bold border border-cyan-400/20 shadow-lg group-hover:border-cyan-400/40 transition-all text-sm">
+                        {item.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white group-hover:text-cyan-400 transition-colors">{item.name}</p>
+                        <p className="text-gray-500 text-xs mt-0.5">{item.phone}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-5 px-6">
+                    <div className="flex items-center gap-2 text-gray-400 font-medium text-xs">
+                      {item.method}
+                    </div>
+                  </td>
+                  <td className="py-5 px-6">
+                    <span className="font-bold text-white">{item.amount}</span>
+                  </td>
+                  <td className="py-5 px-6 text-center">
+                    <span className={`inline-flex px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.statusColor}`}>
+                      {item.status}
+                    </span>
+                  </td>
+                  <td className="py-5 px-6 text-right">
+                    <p className="font-medium text-gray-300">{item.date}</p>
+                    <p className="text-[10px] text-gray-500 uppercase mt-0.5">{item.time}</p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
