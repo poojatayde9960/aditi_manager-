@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Users } from "lucide-react";
 import UserList from "../components/UserList";
 // import GetUserOrdersDetail from "./GetUserOrdersDetail";
+import GetUserOrdersDetail from "./GetUserOrdersDetail";
 
 import {
   LineChart,
@@ -9,7 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useGetAverageMonthlyOrdersQuery, useGetUsersQuery } from "../../Redux/Apis/usersApi";
-import GetUserOrdersDetail from "./GetUserOrdersDetail";
 
 const UserManagementSkeleton = () => {
   return (
