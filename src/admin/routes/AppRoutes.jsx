@@ -17,7 +17,7 @@ import Blog from "../pages/Blog";
 import Gifts from "../pages/Gifts";
 import Login from "../pages/Login";
 import AdminProtector from "./AdminProtector";
-import GetUserOrdersDetail from "../pages/GetuserOrdersDetail";
+import GetUserOrdersDetail from "../pages/GetUserOrdersDetail";
 import AddProduct from "../pages/AddProduct";
 
 const AppRoutes = () => {

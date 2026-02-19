@@ -6,17 +6,42 @@ import { useGiftGetByIdQuery } from '../../Redux/Apis/giftApi';
 
 const GetUserOrdersDetail = ({ onBack }) => {
     const navigate = useNavigate();
-
+    const [openOrderId, setOpenOrderId] = useState(null);
     const { userId } = useParams();
     const [activeTab, setActiveTab] = useState('Ongoing Orders');
 
-    const { data, isLoading, isError } = useGetUserByIdQuery(userId);
-    const { data: giftData, isLoading: isGiftLoading } = useGiftGetByIdQuery(userId);
+    const { data, isLoading, isError } = useGetUserByIdQuery(userId, {
+        pollingInterval: 15000,
+        refetchOnFocus: true,
+        refetchOnReconnect: true,
+    });
+    const { data: giftData, isLoading: isGiftLoading } = useGiftGetByIdQuery(userId, {
+        pollingInterval: 30000,
+        refetchOnFocus: true,
+        refetchOnReconnect: true,
+    });
 
     const user = data?.user || data || {};
 
-    const ongoingOrders = user?.ongoingOrdersList || [];
-    const completedOrders = user?.completedOrdersList || [];
+    // Combine all available orders and filter them properly by status
+    const allOrdersFromUser = [
+        ...(user?.ongoingOrdersList || []),
+        ...(user?.completedOrdersList || []),
+        ...(data?.orders || [])
+    ];
+
+    // Remove duplicates by ID and filter
+    const uniqueOrders = Array.from(new Map(allOrdersFromUser.map(o => [o._id, o])).values());
+
+    const ongoingOrders = uniqueOrders.filter(order => {
+        const s = (order.Status || order.status || '').toLowerCase();
+        return s !== 'completed' && s !== 'delivered';
+    });
+
+    const completedOrders = uniqueOrders.filter(order => {
+        const s = (order.Status || order.status || '').toLowerCase();
+        return s === 'completed' || s === 'delivered';
+    });
 
     // Ensure addresses is an array
     const addresses = user?.addresses || [];
@@ -94,14 +119,14 @@ const GetUserOrdersDetail = ({ onBack }) => {
                         </div>
                         <div className="flex items-center gap-2">
                             <Calendar size={16} />
-                            Joined {user?.joinedDate || (user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A')}
+                            Joined {user?.joinedDate || (user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-IN') : 'N/A')}
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-slate-700/50">
                     <div className="text-2xl md:text-3xl font-bold text-[#22FF00]">
-                        €{user?.totalSpent || 0}
+                        €{(user?.totalSpent || 0).toLocaleString()}
                     </div>
                     <p className="text-slate-400 text-sm">Total Spent</p>
                 </div>
@@ -135,13 +160,17 @@ const GetUserOrdersDetail = ({ onBack }) => {
                         >
                             <div className="flex flex-col md:flex-row md:justify-between gap-4">
                                 <div className="flex gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D207FF] to-[#00D4FF] flex items-center justify-center font-bold">
-                                        {getInitials(user?.name)}
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D207FF] to-[#00D4FF] flex items-center justify-center font-bold overflow-hidden">
+                                        {order.products?.[0]?.image ? (
+                                            <img src={order.products[0].image} className="w-full h-full object-cover" alt="" />
+                                        ) : (
+                                            getInitials(user?.name)
+                                        )}
                                     </div>
                                     <div>
-                                        <p className="font-semibold">Order #{order._id?.slice(-6)}</p>
+                                        <p className="font-semibold">Order #{order._id?.slice(-8)}</p>
                                         <p className="text-xs text-slate-400">
-                                            {new Date(order.createdAt).toLocaleDateString()}
+                                            {new Date(order.createdAt).toLocaleDateString('en-IN')}
                                         </p>
                                     </div>
                                 </div>
@@ -151,7 +180,7 @@ const GetUserOrdersDetail = ({ onBack }) => {
                                         {order.status || order.Status}
                                     </span>
                                     <span className="text-[#22FF00] font-bold">
-                                        €{order.totalAmount}
+                                        €{(order.totalAmount || 0).toLocaleString()}
                                     </span>
                                     <ChevronDown size={18} />
                                 </div>

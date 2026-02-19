@@ -63,7 +63,12 @@ const OrdersSkeleton = () => {
 };
 
 const Orders = () => {
-  const { data, isLoading, refetch } = useGetOdersQuery();
+  const { data, isLoading, refetch } = useGetOdersQuery(undefined, {
+    pollingInterval: 10000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMountOrArgChange: true,
+  });
   const [updateStatus, { isLoading: isUpdating }] = useUpdateStatusMutation();
 
   const [activeTab, setActiveTab] = useState("All");

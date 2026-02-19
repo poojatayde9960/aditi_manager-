@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "../Redux/Apis/auth.Api";
 import { productApi } from "./Apis/product.Api";
 import { userOrderApi } from "./Apis/usersApi";
@@ -33,5 +34,7 @@ const store = configureStore({
       .concat(enquiryApi.middleware)
       .concat(giftApi.middleware)
 });
+
+setupListeners(store.dispatch);
 
 export default store;

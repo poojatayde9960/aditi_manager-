@@ -9,8 +9,16 @@ import { Icon } from "@iconify/react";
 import { useGetCardstatusQuery, useGetUserConversionRateQuery } from "../../Redux/Apis/dashboardApi";
 const AdminDashboard = () => {
 
-  const { data, isLoading } = useGetCardstatusQuery();
-  const { data: conversionRateData, isLoading: isConversionRateLoading } = useGetUserConversionRateQuery();
+  const { data, isLoading } = useGetCardstatusQuery(undefined, {
+    pollingInterval: 10000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+  const { data: conversionRateData, isLoading: isConversionRateLoading } = useGetUserConversionRateQuery(undefined, {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   // Precise data to match the screenshot curve
   const revenueData = [
     { uv: 12 }, { uv: 13 }, { uv: 14 }, { uv: 15 }, { uv: 18 }, { uv: 19 }, { uv: 20 }, { uv: 22 }, { uv: 26 }, { uv: 34 }, { uv: 38 }, { uv: 40 }

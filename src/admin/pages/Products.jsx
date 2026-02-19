@@ -88,7 +88,12 @@ const Products = () => {
   const [filteredSearch, setFilteredSearch] = useState();
   const [deletingId, setDeletingId] = useState(null);
 
-  const { data: productsData, isLoading: getLoad } = useGetProductsQuery();
+  const { data: productsData, isLoading: getLoad } = useGetProductsQuery(undefined, {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMountOrArgChange: true,
+  });
   const [deleteMutation] = useDeleteProductMutation();
 
   const handleDelete = async (id) => {

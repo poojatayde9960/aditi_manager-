@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useGetAverageMonthlyOrdersQuery, useGetUsersQuery } from "../../Redux/Apis/usersApi";
-import GetUserOrdersDetail from "./GetuserOrdersDetail";
+import GetUserOrdersDetail from "./GetUserOrdersDetail";
 
 const UserManagementSkeleton = () => {
   return (
@@ -95,9 +95,19 @@ const MiniSparkline = ({ data }) => {
 
 
 const UserManagement = () => {
-  const { data: userData, isLoading, isError } = useGetUsersQuery();
+  const { data: userData, isLoading, isError } = useGetUsersQuery(undefined, {
+    pollingInterval: 10000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMountOrArgChange: true,
+  });
   const [selectedUser, setSelectedUser] = useState(null);
-  const { data: averageMonthlyOrdersData, isLoading: isAverageMonthlyOrdersLoading } = useGetAverageMonthlyOrdersQuery();
+  const { data: averageMonthlyOrdersData, isLoading: isAverageMonthlyOrdersLoading } = useGetAverageMonthlyOrdersQuery(undefined, {
+    pollingInterval: 30000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMountOrArgChange: true,
+  });
 
 
   if (isLoading) return <UserManagementSkeleton />;

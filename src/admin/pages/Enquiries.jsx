@@ -59,7 +59,12 @@ const EnquiriesSkeleton = () => {
 };
 
 const Enquiries = () => {
-  const { data, isLoading, isError, refetch } = useGetEnquiryQuery();
+  const { data, isLoading, isError, refetch } = useGetEnquiryQuery(undefined, {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMountOrArgChange: true,
+  });
   const [deleteEnquiry] = useEnquiryDeleteMutation()
   const [managerContactResolve] = useManagerContactResolveMutation();
   const [updateStatus, { isLoading: updating }] = useEnquiryStatusMutation();
