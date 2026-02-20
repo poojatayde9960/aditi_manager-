@@ -195,11 +195,11 @@ const Products = () => {
             {layout === "list" && productsData?.products && (
               <div className="bg-[#0B1135] border border-white/10 rounded-md overflow-hidden shadow-2xl">
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[1000px] text-left border-collapse table-fixed">
+                  <table className="w-full min-w-[1000px] text-left border-collapse">
                     <thead>
                       <tr className="text-gray-400 text-[14px]  tracking-[0.1em] border-b border-white/10 bg-white/[0.01]">
-                        <th className="py-5 px-6 font-manrope font-thin">Product ID</th>
-                        <th className="py-5 px-6 font-manrope font-thin text-center">Product Name</th>
+                        <th className="py-5 px-6 font-manrope font-thin w-[150px]">Product ID</th>
+                        <th className="py-5 px-6 font-manrope font-thin text-left w-[350px]">Product Name</th>
                         <th className="py-5 px-6 font-manrope font-thin text-center">Amount (€)</th>
                         <th className="py-5 px-6 font-manrope font-thin text-center">Stock</th>
                         <th className="py-5 px-6 font-manrope font-thin text-center">Sales</th>
@@ -217,8 +217,8 @@ const Products = () => {
                             #{p._id.slice(-8)}
                           </td>
 
-                          <td className="py-5 px-6 text-center">
-                            <div className="flex items-center justify-center gap-4">
+                          <td className="py-5 px-6 text-left">
+                            <div className="flex items-center gap-4">
                               <div className="w-12 h-12 rounded-xl bg-[#020523] border border-white/10 flex items-center justify-center p-1.5 shadow-lg group-hover:border-[#00D4FF]/30 transition-all shrink-0">
                                 <img
                                   src={p?.heroSection?.bgImage}
@@ -226,8 +226,8 @@ const Products = () => {
                                   className="w-full h-full object-contain"
                                 />
                               </div>
-                              <div className="text-left">
-                                <p className="text-[#FFFFFF]  text-sm font-manrope group-hover:text-[#00D4FF] transition-colors">
+                              <div className="min-w-0">
+                                <p className="text-[#FFFFFF] text-sm font-manrope group-hover:text-[#00D4FF] transition-colors truncate max-w-[250px]" title={p?.heroSection?.productName}>
                                   {p?.heroSection?.productName}
                                 </p>
                               </div>
