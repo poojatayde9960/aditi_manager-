@@ -1,9 +1,25 @@
-import { Menu } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
 import { Icon } from "@iconify/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { managerLogout } from "../../Redux/slices/authSlices";
 
 const Header = ({ toggleSidebar, theme, setTheme }) => {
-  // Theme toggle function
-  // const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { manager } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(managerLogout());
+    navigate("/login");
+  };
+
+  // Get initials or first letter of name
+  const getUserInitial = () => {
+    if (manager?.name) return manager.name.charAt(0).toUpperCase();
+    if (manager?.manager?.name) return manager.manager.name.charAt(0).toUpperCase();
+    return "A";
+  };
 
   return (
     <header className="fixed top-0 right-0 z-50 
@@ -43,30 +59,28 @@ const Header = ({ toggleSidebar, theme, setTheme }) => {
 
         {/* Right Side: Icons + Avatar */}
         <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
-          {/* Theme Toggle */}
-          {/* <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-white/10 transition-all"
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center w-10 h-10 rounded-full
+              bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-500
+              border border-white/10 hover:border-red-500/50
+              transition-all duration-300 group relative"
+            title="Logout"
           >
-            <Icon
-              icon={theme === "light" ? "solar:moon-bold" : "solar:sun-bold"}
-              width={24}
-              height={24}
-              className="text-gray-300"
-            />
-          </button> */}
-
-          {/* Notifications */}
-          <button className="p-2 rounded-lg hover:bg-white/10 transition-all relative">
-            <Icon icon="clarity:notification-solid" width={24} height={24} className="text-gray-300" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+            <LogOut size={20} />
+            <span className="absolute -bottom-10 right-0 scale-0 group-hover:scale-100 
+              bg-red-500 text-white text-[10px] px-2 py-1 rounded-md
+              transition-all duration-200 pointer-events-none whitespace-nowrap">
+              Logout
+            </span>
           </button>
 
           {/* User Avatar */}
           <div className="flex items-center justify-center w-10 h-10 rounded-full 
             bg-gradient-to-br from-cyan-400 to-blue-600 text-white font-semibold text-sm
-            shadow-lg shadow-cyan-500/30">
-            PK
+            shadow-lg shadow-cyan-500/30 border border-white/20">
+            {getUserInitial()}
           </div>
         </div>
 
