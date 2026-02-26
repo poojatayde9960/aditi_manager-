@@ -1,11 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { createApi } from "@reduxjs/toolkit/query/react"
+import { baseQuery } from "./auth.Api";
 
 export const giftApi = createApi({
     reducerPath: "giftApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_BASE_URL,
-        credentials: "include", // if your API needs cookies
-    }),
+    baseQuery,
     tagTypes: ["gift"],
     endpoints: (builder) => ({
         giftGetById: builder.query({

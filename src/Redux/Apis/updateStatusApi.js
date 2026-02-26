@@ -1,12 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./auth.Api";
 
 
 export const updateStatusApi = createApi({
     reducerPath: "updateStatusApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_BASE_URL,
-        credentials: "include",
-    }),
+    baseQuery,
     tagTypes: ["order"],
     endpoints: (builder) => ({
         updateStatus: builder.mutation({

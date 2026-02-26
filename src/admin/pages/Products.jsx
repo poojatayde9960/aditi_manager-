@@ -117,7 +117,7 @@ const Products = () => {
       return;
     }
     const results = productsData?.products?.filter((item) =>
-      item?.heroSection?.productName?.toLowerCase().includes(text.toLowerCase())
+      (item?.heroSection?.productName?.toLowerCase() || "").includes(text.toLowerCase())
     );
     setFilteredSearch(results);
   };

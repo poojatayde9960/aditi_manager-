@@ -1,11 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { createApi } from "@reduxjs/toolkit/query/react"
+import { baseQueryWithAdmin } from "./auth.Api";
 
 export const dashboardApi = createApi({
     reducerPath: "dashboardApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${import.meta.env.VITE_BASE_URL}/admin`,
-        credentials: "include",
-    }),
+    baseQuery: baseQueryWithAdmin,
     tagTypes: ["dashboard"],
     endpoints: (builder) => {
         return {

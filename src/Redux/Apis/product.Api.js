@@ -1,12 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithAdmin } from "./auth.Api";
 
 export const productApi = createApi({
   reducerPath: "productApi",
-  baseQuery: fetchBaseQuery({
-    // baseUrl: import.meta.env.VITE_BASE_URL,
-    baseUrl: `${import.meta.env.VITE_BASE_URL}/admin`,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithAdmin,
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     addProduct: builder.mutation({

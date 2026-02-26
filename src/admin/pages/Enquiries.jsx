@@ -100,9 +100,9 @@ const Enquiries = () => {
 
   const filteredEnquiries = enquiries.filter((e) => {
     const matchesStatus = statusFilter === "All Status" || e.status === statusFilter;
-    const matchesSearch = e.name.toLowerCase().includes(search.toLowerCase()) ||
-      e.email.toLowerCase().includes(search.toLowerCase()) ||
-      e.message.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = (e.name?.toLowerCase() || "").includes(search.toLowerCase()) ||
+      (e.email?.toLowerCase() || "").includes(search.toLowerCase()) ||
+      (e.message?.toLowerCase() || "").includes(search.toLowerCase());
     return matchesStatus && matchesSearch;
   });
 
