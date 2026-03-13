@@ -101,7 +101,7 @@ const Orders = () => {
       date: order.createdAt
         ? new Date(order.createdAt).toLocaleDateString("en-IN")
         : "N/A",
-      paid: order.paymentStatus === "completed" ? "Paid" : "Unpaid",
+      paymentStatus: order.paymentStatus || "Unpaid",
       raw: order,
     };
   });
@@ -274,7 +274,7 @@ const Orders = () => {
                   <td className="p-4 text-gray-300">{order.date}</td>
                   <td className="p-4">
                     <span className="px-4 py-1 rounded-lg bg-[#22FF0030] text-[#22FF00] text-sm font-medium">
-                      {order.paid}
+                      {order.paymentStatus}
                     </span>
                   </td>
                   <td className="p-4">

@@ -170,45 +170,21 @@ const OrderDetails = ({ open, onClose, order }) => {
 
             {[
               "Order Placed",
-              "Payment Confirmed",
+              orderData?.paymentStatus || "Payment Confirmed",
               "Processing",
               "Shipped",
               "Delivered",
             ].map((step, index) => {
-
-              const statusFlow = ["Pending", "Processing", "Shipped", "Completed"];
-              const currentStatus = orderData?.Status || "Pending";
-              const currentIndex = statusFlow.indexOf(currentStatus);
-
-              const paymentCompleted =
-                orderData?.paymentStatus?.toLowerCase() === "completed";
-
+              const currentStatus = (orderData?.status || orderData?.Status || 'Pending')?.toLowerCase();
+              const paymentStatus = (orderData?.paymentStatus || "").toLowerCase();
+              const history = orderData?.statusHistory || [];
               let isActive = false;
 
-              if (index === 0) {
-                // Order Placed (always active)
-                isActive = true;
-              }
-
-              else if (index === 1) {
-                // 🔥 Payment Confirmed (STATIC LOGIC)
-                isActive = paymentCompleted;
-              }
-
-              else if (index === 2) {
-                // Processing (dynamic)
-                isActive = currentIndex >= 1;
-              }
-
-              else if (index === 3) {
-                // Shipped (dynamic)
-                isActive = currentIndex >= 2;
-              }
-
-              else if (index === 4) {
-                // Delivered (dynamic)
-                isActive = currentIndex >= 3;
-              }
+              if (index === 0) isActive = true;
+              else if (index === 1) isActive = ["paid", "completed"].includes(paymentStatus);
+              else if (index === 2) isActive = ["processing", "shipped", "delivered", "completed"].includes(currentStatus);
+              else if (index === 3) isActive = ["shipped", "delivered", "completed"].includes(currentStatus);
+              else if (index === 4) isActive = ["delivered", "completed"].includes(currentStatus);
 
               return (
                 <div

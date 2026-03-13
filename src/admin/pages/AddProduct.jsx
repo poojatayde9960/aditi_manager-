@@ -79,14 +79,14 @@ const AddProduct = () => {
     // States aligned with LATEST backend keys (POST/PUT format)
     const [gardenName, setGardenName] = useState("");
     const [productName, setProductName] = useState("");
-    const [category, setCategory] = useState("");
+    const [description1, setDescription1] = useState("");
     const [price, setPrice] = useState("");
     const [quantityMl, setQuantityMl] = useState("");
     const [ingredientsMain, setIngredientsMain] = useState("");
     const [stock, setStock] = useState("");
 
     // Description & Images Sections
-    const [description1, setDescription1] = useState("");
+    // const [description1, setDescription1] = useState("");
     const [bgImage1, setBgImage1] = useState(null);
     const [description2, setDescription2] = useState("");
     const [bgImage2, setBgImage2] = useState(null);
@@ -154,7 +154,7 @@ const AddProduct = () => {
 
                 setQuantityMl(p.productDetailsSection?.quantityMl || p.quantityMl || "");
                 setPrice(p.productDetailsSection?.price || p.price || "");
-                setCategory(p.productDetailsSection?.category || p.heroSection?.category || p.category || "");
+                setDescription1(p.productDetailsSection?.description1 || p.description1 || "");
 
                 // Safe handling for ingredients array or string
                 const ingredientsData = p.productDetailsSection?.ingredients || p.ingredientsMain || p.ingredients;
@@ -216,7 +216,8 @@ const AddProduct = () => {
             const formData = new FormData();
             formData.append("productName", productName);
             formData.append("gardenName", gardenName);
-            formData.append("category", category);
+            // formData.append("description1", description1);
+            formData.append("category", gardenName);
             formData.append("price", price);
             formData.append("quantityMl", quantityMl);
             formData.append("ingredientsMain", ingredientsMain);
@@ -340,8 +341,8 @@ const AddProduct = () => {
                             <InputField
                                 label="Subtext For Hero"
                                 placeholder="e.g A petal of serene"
-                                value={category}
-                                onChange={setCategory}
+                                value={description1}
+                                onChange={setDescription1}
                             />
                         </div>
 

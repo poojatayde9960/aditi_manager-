@@ -264,17 +264,18 @@ export default function CustomerDetails() {
                     <h3 className="text-sm text-gray-400 mb-3">Order Timeline</h3>
                     {[
                       "Order Placed",
-                      "Payment Confirmed",
+                      order?.paymentStatus || "Payment Confirmed",
                       "Processing",
                       "Shipped",
                       "Delivered",
                     ].map((step, index) => {
                       const currentStatus = (order?.status || order?.Status || 'Pending')?.toLowerCase();
                       const paymentStatus = (order?.paymentStatus || "").toLowerCase();
+                      const history = order?.statusHistory || [];
                       let isActive = false;
 
                       if (index === 0) isActive = true;
-                      else if (index === 1) isActive = paymentStatus === "completed";
+                      else if (index === 1) isActive = ["paid", "completed"].includes(paymentStatus);
                       else if (index === 2) isActive = ["processing", "shipped", "delivered", "completed"].includes(currentStatus);
                       else if (index === 3) isActive = ["shipped", "delivered", "completed"].includes(currentStatus);
                       else if (index === 4) isActive = ["delivered", "completed"].includes(currentStatus);
@@ -296,24 +297,23 @@ export default function CustomerDetails() {
                             <p className="font-medium">{step}</p>
                             <p className="text-gray-400 text-xs">
                               {(() => {
-                                const history = order?.statusHistory || [];
+                                let timestamp = null;
                                 if (index === 0) {
-                                  const pending = history.find(s => s.status === "Pending");
-                                  return pending?.timestamp ? new Date(pending.timestamp).toLocaleString("en-IN") : "N/A";
+                                  const h = history.find(s => s.status?.toLowerCase() === "pending");
+                                  timestamp = h?.timestamp || order.createdAt;
+                                } else if (index === 1) {
+                                  if (isActive) timestamp = order.createdAt;
+                                } else if (index === 2) {
+                                  const h = history.find(s => s.status?.toLowerCase() === "processing");
+                                  timestamp = h?.timestamp;
+                                } else if (index === 3) {
+                                  const h = history.find(s => s.status?.toLowerCase() === "shipped");
+                                  timestamp = h?.timestamp;
+                                } else if (index === 4) {
+                                  const h = history.find(s => s.status?.toLowerCase() === "completed" || s.status?.toLowerCase() === "delivered");
+                                  timestamp = h?.timestamp;
                                 }
-                                if (index === 2) {
-                                  const processing = history.find(s => s.status === "Processing");
-                                  return processing?.timestamp ? new Date(processing.timestamp).toLocaleString("en-IN") : "N/A";
-                                }
-                                if (index === 3) {
-                                  const shipped = history.find(s => s.status === "Shipped");
-                                  return shipped?.timestamp ? new Date(shipped.timestamp).toLocaleString("en-IN") : "N/A";
-                                }
-                                if (index === 4) {
-                                  const completed = history.find(s => s.status === "Completed");
-                                  return completed?.timestamp ? new Date(completed.timestamp).toLocaleString("en-IN") : "N/A";
-                                }
-                                return "N/A";
+                                return timestamp ? new Date(timestamp).toLocaleString("en-IN") : "N/A";
                               })()}
                             </p>
                           </div>
