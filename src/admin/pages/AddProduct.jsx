@@ -154,7 +154,7 @@ const AddProduct = () => {
 
                 setQuantityMl(p.productDetailsSection?.quantityMl || p.quantityMl || "");
                 setPrice(p.productDetailsSection?.price || p.price || "");
-                setDescription1(p.productDetailsSection?.description1 || p.description1 || "");
+                // setDescription1(p.productDetailsSection?.description1 || p.description1 || "");
 
                 // Safe handling for ingredients array or string
                 const ingredientsData = p.productDetailsSection?.ingredients || p.ingredientsMain || p.ingredients;
